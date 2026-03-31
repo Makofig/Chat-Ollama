@@ -22,7 +22,7 @@ export default function ChatContainer() {
         setPendingMessage(newMessage);
 
         setIsWaitingResponse(true); 
-        setIsStreaming(true);
+        setIsStreaming(false);
     }
 
     useEffect(() => {
@@ -56,6 +56,8 @@ export default function ChatContainer() {
               assistantMessage
             ]);
 
+            setIsStreaming(true); 
+            
             while (true) {
               const { done, value } = await render.read(); 
 

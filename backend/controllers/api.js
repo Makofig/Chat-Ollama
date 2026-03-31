@@ -1,8 +1,5 @@
 process.loadEnvFile(); 
 
-import { createOllama } from 'ai-sdk-ollama'; 
-import { streamText } from 'ai'; 
-import { generateText } from 'ai';
 import ollama from 'ollama'
 
 // Esportarlo como una clase o un objeto con funciones 
@@ -81,17 +78,13 @@ async function chatController(req, res) {
         // Headers de streaming
         res.setHeader("Content-Type", "text/plain; charset=utf-8");
         res.setHeader("Transfer-Encoding", "chunked");
-
-        // for await (const part of response) {
-        //     process.stdout.write(part.message.content)
-        // }
+        
         for await (const part of stream) {
             const chunk = part.message?.content || "";
             res.write(chunk); // 🔥 enviás texto en tiempo real
         }
 
         res.end();
-        //return res.json({ respuesta: response.message?.content || "No se recibio una respuesta del modelo" }); 
        
     } catch (error) {
         console.error("Error en chatController:", error);
